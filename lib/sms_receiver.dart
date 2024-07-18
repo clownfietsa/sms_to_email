@@ -1,4 +1,4 @@
-import 'package:telephony/telephony.dart';
+import 'package:telephony_fix/telephony.dart';
 import 'models/settings.dart';
 import 'email_sender.dart';
 
