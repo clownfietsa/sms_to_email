@@ -20,6 +20,6 @@ void sendEmail(String messageBody, Settings settings, String senderName) async {
   try {
     await send(message, smtpServer);
   } on MailerException catch (e) {
-    // Handle the exception accordingly
+    // Обработка ошибки отправки почты
   }
 }

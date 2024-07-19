@@ -7,15 +7,17 @@ class SMSReceiver {
   
   void listenIncomingSMS(Settings settings) {
     telephony.listenIncomingSms(
-      onNewMessage: (SmsMessage message) {
+      onNewMessage: (SmsMessage message) async {
         if (_shouldForward(message.body, settings.keywordFilter)) {
-          sendEmail(message.body ?? '', settings, message.address ?? 'Unknown');
+          // Ensure the settings are up-to-date before sending email
+          final updatedSettings = await Settings.load();
+          sendEmail(message.body ?? '', updatedSettings, message.address ?? 'Unknown');
         }
       },
       onBackgroundMessage: _onBackgroundMessageHandler,
     );
   }
-  
+
   @pragma("vm:entry-point")
   static void _onBackgroundMessageHandler(SmsMessage message) async {
     final settings = await Settings.load();

@@ -2,6 +2,7 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'sms_receiver.dart';
 import 'models/settings.dart';
+
 @pragma("vm:entry-point", true)
 Future<Settings> getSettings() async {
   return await Settings.load();
@@ -51,4 +52,9 @@ Future<bool> onStart(ServiceInstance service) async {
   smsReceiver.listenIncomingSMS(settings);
 
   return true;
+}
+
+Future<void> stopService() async {
+  final service = FlutterBackgroundService();
+  service.invoke("stopService");
 }
