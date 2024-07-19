@@ -8,7 +8,7 @@ import 'settings_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _requestPermissionsAndInitializeService();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 Future<void> _requestPermissionsAndInitializeService() async {
@@ -17,15 +17,19 @@ Future<void> _requestPermissionsAndInitializeService() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -73,18 +77,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SMS to Email'),
+        title: const Text('SMS to Email'),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: _openSettings,
           ),
         ],
       ),
       body: Center(
         child: _settings == null
-            ? CircularProgressIndicator()
-            : Text('Listening for incoming SMS...'),
+            ? const CircularProgressIndicator()
+            : const Text('Ожидаю входящие СМС'),
       ),
     );
   }

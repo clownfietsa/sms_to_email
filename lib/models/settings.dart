@@ -22,13 +22,13 @@ class Settings {
   static Future<Settings> load() async {
     final prefs = await SharedPreferences.getInstance();
     return Settings(
-      smtpHost: prefs.getString('smtpHost') ?? 'postal2.paykeeper.ru',
-      smtpPort: prefs.getInt('smtpPort') ?? 465,
-      useSsl: prefs.getBool('useSsl') ?? false,
-      senderEmail: prefs.getString('senderEmail') ?? 'cc@postal2.paykeeper.ru',
-      senderPassword: prefs.getString('senderPassword') ?? 'RXsa7CSlmmG6Swdlc86GOANa',
-      recipientEmail: prefs.getString('recipientEmail') ?? 'ap@paykeeper.ru',
-      keywordFilter: prefs.getString('keywordFilter') ?? 'Тест',
+      smtpHost: prefs.getString('Имя SMTP-сервера') ?? 'postal2.paykeeper.ru',
+      smtpPort: prefs.getInt('Порт SMTP-сервера') ?? 465,
+      useSsl: prefs.getBool('Сервер использует SSL') ?? false,
+      senderEmail: prefs.getString('Название почтового ящика') ?? 'cc@postal2.paykeeper.ru',
+      senderPassword: prefs.getString('Пароль к почтовому ящику') ?? 'RXsa7CSlmmG6Swdlc86GOANa',
+      recipientEmail: prefs.getString('Почтовый ящик получателя') ?? 'cc@paykeeper.ru',
+      keywordFilter: prefs.getString('Фильтр по ключевым словам (разделитель запятая)') ?? 'Тест',
     );
   }
 

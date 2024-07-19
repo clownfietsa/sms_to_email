@@ -4,7 +4,6 @@ import 'sms_receiver.dart';
 import 'models/settings.dart';
 @pragma("vm:entry-point", true)
 Future<Settings> getSettings() async {
-  // Загрузка настроек из SharedPreferences
   return await Settings.load();
 }
 
@@ -30,7 +29,7 @@ Future<bool> onStart(ServiceInstance service) async {
   if (service is AndroidServiceInstance) {
     service.setForegroundNotificationInfo(
       title: "SMS to Email Service",
-      content: "Listening for incoming SMS...",
+      content: "Ожидаю входящие СМС...",
     );
 
     service.on('setAsForeground').listen((event) {
@@ -46,7 +45,6 @@ Future<bool> onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  // Загрузка настроек и настройка SMSReceiver
   final settings = await getSettings();
   @pragma("vm:entry-point", true)
   final smsReceiver = SMSReceiver();

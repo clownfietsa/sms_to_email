@@ -5,7 +5,7 @@ class SettingsPage extends StatefulWidget {
   final Settings settings;
   final Future<Settings> Function(Settings) onSettingsChanged;
 
-  SettingsPage({required this.settings, required this.onSettingsChanged});
+  const SettingsPage({super.key, required this.settings, required this.onSettingsChanged});
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -62,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -70,15 +70,15 @@ class _SettingsPageState extends State<SettingsPage> {
           children: [
             TextField(
               controller: _smtpHostController,
-              decoration: InputDecoration(labelText: 'SMTP Host'),
+              decoration: const InputDecoration(labelText: 'Имя SMTP-сервера'),
             ),
             TextField(
               controller: _smtpPortController,
-              decoration: InputDecoration(labelText: 'SMTP Port'),
+              decoration: const InputDecoration(labelText: 'Порт SMTP-сервера'),
               keyboardType: TextInputType.number,
             ),
             SwitchListTile(
-              title: Text('Use SSL'),
+              title: const Text('Сервер использует SSL'),
               value: _useSsl,
               onChanged: (bool value) {
                 setState(() {
@@ -88,25 +88,25 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             TextField(
               controller: _senderEmailController,
-              decoration: InputDecoration(labelText: 'Sender Email'),
+              decoration: const InputDecoration(labelText: 'Название почтового ящика'),
             ),
             TextField(
               controller: _senderPasswordController,
-              decoration: InputDecoration(labelText: 'Sender Password'),
+              decoration: const InputDecoration(labelText: 'Пароль к почтовому ящику'),
               obscureText: true,
             ),
             TextField(
               controller: _recipientEmailController,
-              decoration: InputDecoration(labelText: 'Recipient Email'),
+              decoration: const InputDecoration(labelText: 'Почтовый ящик получателя'),
             ),
             TextField(
               controller: _keywordFilterController,
-              decoration: InputDecoration(labelText: 'Keyword Filter (comma separated)'),
+              decoration: const InputDecoration(labelText: 'Фильтр по ключевым словам (разделитель запятая)'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _saveSettings,
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),

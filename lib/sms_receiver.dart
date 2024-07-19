@@ -6,10 +6,8 @@ class SMSReceiver {
   final Telephony telephony = Telephony.instance;
   
   void listenIncomingSMS(Settings settings) {
-    print('Listening for incoming SMS...');
     telephony.listenIncomingSms(
       onNewMessage: (SmsMessage message) {
-        print('Received SMS: ${message.body}');
         if (_shouldForward(message.body, settings.keywordFilter)) {
           sendEmail(message.body ?? '', settings, message.address ?? 'Unknown');
         }

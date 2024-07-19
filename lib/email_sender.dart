@@ -18,12 +18,7 @@ void sendEmail(String messageBody, Settings settings, String senderName) async {
     ..text = messageBody;
 
   try {
-    final sendReport = await send(message, smtpServer);
-    print('Message sent: ' + sendReport.toString());
+    await send(message, smtpServer);
   } on MailerException catch (e) {
-    print('Message not sent. \n' + e.toString());
-    for (var p in e.problems) {
-      print('Problem: ${p.code}: ${p.msg}');
-    }
   }
 }
