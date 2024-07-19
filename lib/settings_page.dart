@@ -16,7 +16,7 @@ class _SettingsPageState extends State<SettingsPage> {
   late TextEditingController _smtpPortController;
   late TextEditingController _senderEmailController;
   late TextEditingController _senderPasswordController;
-  late TextEditingController _recipientEmailController;
+  late TextEditingController _recipientEmailsController;
   late TextEditingController _keywordFilterController;
   late bool _useSsl;
 
@@ -27,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _smtpPortController = TextEditingController(text: widget.settings.smtpPort.toString());
     _senderEmailController = TextEditingController(text: widget.settings.senderEmail);
     _senderPasswordController = TextEditingController(text: widget.settings.senderPassword);
-    _recipientEmailController = TextEditingController(text: widget.settings.recipientEmail);
+    _recipientEmailsController = TextEditingController(text: widget.settings.recipientEmails.join(','));
     _keywordFilterController = TextEditingController(text: widget.settings.keywordFilter);
     _useSsl = widget.settings.useSsl;
   }
@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _smtpPortController.dispose();
     _senderEmailController.dispose();
     _senderPasswordController.dispose();
-    _recipientEmailController.dispose();
+    _recipientEmailsController.dispose();
     _keywordFilterController.dispose();
     super.dispose();
   }
@@ -50,7 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
       useSsl: _useSsl,
       senderEmail: _senderEmailController.text,
       senderPassword: _senderPasswordController.text,
-      recipientEmail: _recipientEmailController.text,
+      recipientEmails: _recipientEmailsController.text.split(',').map((e) => e.trim()).toList(),
       keywordFilter: _keywordFilterController.text,
     );
 
@@ -96,8 +96,8 @@ class _SettingsPageState extends State<SettingsPage> {
               obscureText: true,
             ),
             TextField(
-              controller: _recipientEmailController,
-              decoration: const InputDecoration(labelText: 'Почтовый ящик получателя'),
+              controller: _recipientEmailsController,
+              decoration: const InputDecoration(labelText: 'Почтовые ящики получателей (разделитель запятая)'),
             ),
             TextField(
               controller: _keywordFilterController,

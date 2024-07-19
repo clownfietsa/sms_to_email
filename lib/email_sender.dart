@@ -13,12 +13,13 @@ void sendEmail(String messageBody, Settings settings, String senderName) async {
 
   final message = Message()
     ..from = Address(settings.senderEmail, 'PayKeeper SMS App')
-    ..recipients.add(settings.recipientEmail)
+    ..recipients.addAll(settings.recipientEmails)
     ..subject = 'SMS from $senderName'
     ..text = messageBody;
 
   try {
     await send(message, smtpServer);
   } on MailerException catch (e) {
+    // Handle the exception accordingly
   }
 }
