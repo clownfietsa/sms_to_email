@@ -55,6 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
 
     final updatedSettings = await widget.onSettingsChanged(newSettings);
+
     Navigator.of(context).pop(updatedSettings);
   }
 

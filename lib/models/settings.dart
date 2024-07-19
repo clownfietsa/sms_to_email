@@ -19,16 +19,38 @@ class Settings {
     required this.keywordFilter,
   });
 
+  Map<String, dynamic> toJson() => {
+    'smtpHost': smtpHost,
+    'smtpPort': smtpPort,
+    'useSsl': useSsl,
+    'senderEmail': senderEmail,
+    'senderPassword': senderPassword,
+    'recipientEmails': recipientEmails,
+    'keywordFilter': keywordFilter,
+  };
+
+  factory Settings.fromJson(Map<String, dynamic> json) {
+    return Settings(
+      smtpHost: json['smtpHost'],
+      smtpPort: json['smtpPort'],
+      useSsl: json['useSsl'],
+      senderEmail: json['senderEmail'],
+      senderPassword: json['senderPassword'],
+      recipientEmails: List<String>.from(json['recipientEmails']),
+      keywordFilter: json['keywordFilter'],
+    );
+  }
+
   static Future<Settings> load() async {
     final prefs = await SharedPreferences.getInstance();
     return Settings(
-      smtpHost: prefs.getString('smtpHost') ?? 'postal2.paykeeper.ru',
+      smtpHost: prefs.getString('smtpHost') ?? 'smtp.yandex.ru',
       smtpPort: prefs.getInt('smtpPort') ?? 465,
-      useSsl: prefs.getBool('useSsl') ?? false,
-      senderEmail: prefs.getString('senderEmail') ?? 'cc@postal2.paykeeper.ru',
-      senderPassword: prefs.getString('senderPassword') ?? 'RXsa7CSlmmG6Swdlc86GOANa',
-      recipientEmails: (prefs.getStringList('recipientEmails') ?? ['cc@paykeeper.ru']),
-      keywordFilter: prefs.getString('keywordFilter') ?? 'Тест',
+      useSsl: prefs.getBool('useSsl') ?? true,
+      senderEmail: prefs.getString('senderEmail') ?? 'ap@paykeeper.ru',
+      senderPassword: prefs.getString('senderPassword') ?? 'XVoSej8nNDUQ8F6!',
+      recipientEmails: prefs.getStringList('recipientEmails') ?? ['at@paykeeper.ru'],
+      keywordFilter: prefs.getString('keywordFilter') ?? 'TEST',
     );
   }
 

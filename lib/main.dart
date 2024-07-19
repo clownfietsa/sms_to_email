@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'service_background.dart';
-import 'sms_receiver.dart';
 import 'models/settings.dart';
 import 'settings_page.dart';
+import 'settings_storage.dart';
+import 'sms_receiver.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +36,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final SMSReceiver _smsReceiver = SMSReceiver();
   Settings? _settings;
+  final SMSReceiver _smsReceiver = SMSReceiver();
 
   @override
   void initState() {
@@ -45,11 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadSettings() async {
-    Settings loadedSettings = await Settings.load();
-    setState(() {
-      _settings = loadedSettings;
+    _settings = await SettingsStorage.loadSettings();
+    if (_settings != null) {
       _smsReceiver.listenIncomingSMS(_settings!);
-    });
+    }
+    setState(() {});
   }
 
   void _openSettings() async {
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => SettingsPage(
           settings: _settings!,
           onSettingsChanged: (newSettings) async {
-            await newSettings.save();
+            await SettingsStorage.saveSettings(newSettings);
             return newSettings;
           },
         ),
@@ -68,8 +69,18 @@ class _HomeScreenState extends State<HomeScreen> {
     if (newSettings != null) {
       setState(() {
         _settings = newSettings;
-        _smsReceiver.listenIncomingSMS(_settings!);
+        print('New settings applied: $_settings');
+        _smsReceiver.updateSettings(_settings!);
       });
+
+      // Restart the service to apply new settings
+      print('Stopping service to apply new settings...');
+      await stopService();
+      print('Service stopped.');
+      await initializeService();
+      print('Service initialized.');
+      _smsReceiver.listenIncomingSMS(_settings!); // Restart listener
+      print('SMS listener restarted with new settings.');
     }
   }
 
