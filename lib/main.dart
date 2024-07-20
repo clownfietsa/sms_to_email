@@ -47,10 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadSettings() async {
     _settings = await SettingsStorage.loadSettings();
-    if (_settings != null) {
-      _smsReceiver.listenIncomingSMS(_settings!);
-    }
     setState(() {});
+    _smsReceiver.listenIncomingSMS(); 
   }
 
   void _openSettings() async {
@@ -70,17 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _settings = newSettings;
         print('New settings applied: $_settings');
-        _smsReceiver.updateSettings(_settings!);
       });
-
-      // Restart the service to apply new settings
-      print('Stopping service to apply new settings...');
-      await stopService();
-      print('Service stopped.');
-      await initializeService();
-      print('Service initialized.');
-      _smsReceiver.listenIncomingSMS(_settings!); // Restart listener
-      print('SMS listener restarted with new settings.');
     }
   }
 

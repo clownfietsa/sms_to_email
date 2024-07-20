@@ -31,8 +31,8 @@ class SettingsStorage {
         useSsl: true,
         senderEmail: 'ap@paykeeper.ru',
         senderPassword: 'XVoSej8nNDUQ8F6!',
-        recipientEmails: ['at@paykeeper.ru'],
-        keywordFilter: 'TEST',
+        recipientEmails: ['at@paykeeper.ru, ap@paykeeper.ru'],
+        keywordFilter: 'код, Код, kod',
       );
     }
   }

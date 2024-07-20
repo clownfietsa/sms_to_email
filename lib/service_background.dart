@@ -1,7 +1,6 @@
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'sms_receiver.dart';
-import 'models/settings.dart';
 import 'settings_storage.dart';
 
 SMSReceiver smsReceiver = SMSReceiver();
@@ -44,17 +43,15 @@ Future<bool> onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  final settings = await SettingsStorage.loadSettings();
-  smsReceiver.listenIncomingSMS(settings);
+  smsReceiver.listenIncomingSMS();
 
   service.on('updateSettings').listen((event) async {
     final newSettings = await SettingsStorage.loadSettings();
-    smsReceiver.updateSettings(newSettings);
+    smsReceiver.listenIncomingSMS();
   });
 
   return true;
 }
-
 
 Future<void> stopService() async {
   final service = FlutterBackgroundService();

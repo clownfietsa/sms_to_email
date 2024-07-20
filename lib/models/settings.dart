@@ -44,13 +44,13 @@ class Settings {
   static Future<Settings> load() async {
     final prefs = await SharedPreferences.getInstance();
     return Settings(
-      smtpHost: prefs.getString('smtpHost') ?? 'smtp.yandex.ru',
+      smtpHost: prefs.getString('smtpHost') ?? 'smtp.example.com',
       smtpPort: prefs.getInt('smtpPort') ?? 465,
       useSsl: prefs.getBool('useSsl') ?? true,
-      senderEmail: prefs.getString('senderEmail') ?? 'ap@paykeeper.ru',
-      senderPassword: prefs.getString('senderPassword') ?? 'XVoSej8nNDUQ8F6!',
-      recipientEmails: prefs.getStringList('recipientEmails') ?? ['at@paykeeper.ru'],
-      keywordFilter: prefs.getString('keywordFilter') ?? 'TEST',
+      senderEmail: prefs.getString('senderEmail') ?? 'test@example.com',
+      senderPassword: prefs.getString('senderPassword') ?? '',
+      recipientEmails: prefs.getStringList('recipientEmails') ?? ['test@example.com'],
+      keywordFilter: prefs.getString('keywordFilter') ?? '',
     );
   }
 

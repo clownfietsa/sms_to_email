@@ -4,6 +4,11 @@ import 'models/settings.dart';
 
 class EmailSender {
   Future<void> sendEmail(String messageBody, Settings settings, String senderName) async {
+    if (!_shouldForward(messageBody, settings.keywordFilter)) {
+      print('Message does not meet the keyword filter criteria, not sending email.');
+      return;
+    }
+
     final smtpServer = SmtpServer(
       settings.smtpHost,
       port: settings.smtpPort,
@@ -25,6 +30,19 @@ class EmailSender {
       // Обработка ошибки отправки почты
       print('MailerException: $e');
     }
+  }
+
+  bool _shouldForward(String? messageBody, String keywordFilter) {
+    if (messageBody == null || keywordFilter.isEmpty) {
+      return true;
+    }
+    List<String> keywords = keywordFilter.split(',');
+    for (String keyword in keywords) {
+      if (messageBody.contains(keyword.trim())) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
