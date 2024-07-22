@@ -26,13 +26,13 @@ class SettingsStorage {
       // Если файл не существует или произошла ошибка чтения, возвращаем настройки по умолчанию
       print('Error loading settings: $e');
       return Settings(
-        smtpHost: 'smtp.yandex.ru',
+        smtpHost: 'smtp.example.com',
         smtpPort: 465,
         useSsl: true,
-        senderEmail: 'ap@paykeeper.ru',
-        senderPassword: 'XVoSej8nNDUQ8F6!',
-        recipientEmails: ['at@paykeeper.ru, ap@paykeeper.ru'],
-        keywordFilter: 'код, Код, kod',
+        senderEmail: 'test@example.com',
+        senderPassword: '',
+        recipientEmails: ['test@example.com'],
+        keywordFilter: 'test',
       );
     }
   }
